@@ -5,7 +5,6 @@ namespace FaarenTech\LaravelCustomUuids;
 use FaarenTech\LaravelCustomUuids\Models\UuidModel;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Foundation\AliasLoader;
-use Illuminate\Support\Facades\Route;
 use Illuminate\Support\ServiceProvider;
 
 class CustomUuidServiceProvider extends ServiceProvider
