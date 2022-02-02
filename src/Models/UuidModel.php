@@ -2,11 +2,9 @@
 
 namespace FaarenTech\LaravelCustomUuids\Models;
 
-use FaarenTech\LaravelCustomUuids\Exceptions\UuidException;
+use FaarenTech\LaravelCustomUuids\Helpers\UuidHelper;
 use FaarenTech\LaravelCustomUuids\Interfaces\HasCustomUuidInterface;
 use Illuminate\Database\Eloquent\Model as BaseModel;
-use Illuminate\Support\Facades\DB;
-use Illuminate\Support\Str;
 
 abstract class UuidModel extends BaseModel
 {
@@ -14,67 +12,12 @@ abstract class UuidModel extends BaseModel
     public $incrementing = false;
     protected $keyType = 'string';
 
-    /**
-     * Max tries to generate a uuid
-     */
-    const MAX_TRIES = 25;
-
-    /**
-     * The length of the total uuid
-     */
-    const LENGTH_OF_UUID = 32;
-
     public static function boot()
     {
         parent::boot();
 
         static::creating(function (HasCustomUuidInterface $model) {
-            $model->attributes['uuid'] = self::getUuid($model);
+            $model->attributes['uuid'] = UuidHelper::getUuidForModel($model);
         });
-    }
-
-    /**
-     * Generates a uuid for this instance
-     *
-     * @return string
-     * @throws UuidException
-     */
-    protected static function getUuid(HasCustomUuidInterface $model): string
-    {
-        if (Str::length($model->getUuidPrefix()) === 0) {
-            throw new UuidException("No uuidPrefix was set on model " . get_class($model));
-        }
-
-        $unique = false;
-        $round = 0;
-
-        while (!$unique) {
-            if ($round > self::MAX_TRIES) {
-                throw new UuidException("Could not create Uuid for model: " . get_class($model));
-            }
-            $firstPart = $model->getUuidPrefix() . "_";
-            $uuid = $firstPart . Str::random(self::LENGTH_OF_UUID - strlen($firstPart));
-
-            if (self::hasNoEntryInDatabase($model->getTable(), $uuid)) {
-                $unique = true;
-            }
-            $round++;
-        }
-
-        return $uuid;
-    }
-
-    /**
-     * Checks if the given Uuid is unique in the given table
-     *
-     * @param string $table
-     * @param string $uuid
-     * @param string $column
-     * @return bool
-     */
-    protected static function hasNoEntryInDatabase(string $table, string $uuid, string $column = "uuid"): bool
-    {
-        $count = DB::table($table)->where('uuid', $uuid)->count();
-        return $count === 0;
     }
 }
