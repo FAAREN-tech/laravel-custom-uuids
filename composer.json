@@ -1,0 +1,37 @@
+{
+    "name": "faaren-tech/laravel-custom-uuids",
+    "description": "A package to offer Stripe-like uuids for Laravel",
+    "type": "library",
+    "autoload": {
+        "psr-4": {
+            "FaarenTech\\LaravelCustomUuids\\": "src/",
+            "FaarenTech\\WebhookReceiver\\Database\\Factories\\": "database/factories/",
+            "FaarenTech\\WebhookReceiver\\Tests\\": "tests/"
+        }
+    },
+    "authors": [
+        {
+            "name": "Fabian Hagen",
+            "email": "fabian@faaren.com"
+        }
+    ],
+    "license": "MIT",
+    "extra": {
+        "laravel": {
+            "providers": [
+                "FaarenTech\\LaravelCustomUuids\\CustomUuidServiceProvider"
+            ],
+            "aliases": {}
+        }
+    },
+    "scripts": {
+        "test": "vendor/bin/phpunit",
+        "test-f": "vendor/bin/phpunit --filter"
+    },
+    "require": {
+        "phpunit/phpunit": "^9.5"
+    },
+    "require-dev": {
+        "orchestra/testbench": "^6.24"
+    }
+}
