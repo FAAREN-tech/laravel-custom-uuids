@@ -2,13 +2,19 @@
 
 namespace FaarenTech\LaravelCustomUuids;
 
-use FaarenTech\LaravelCustomUuids\Models\UuidModel;
-use Illuminate\Database\Eloquent\Model;
-use Illuminate\Foundation\AliasLoader;
+use FaarenTech\LaravelCustomUuids\Console\Commands\PublishStubsCommand;
 use Illuminate\Support\ServiceProvider;
 
 class CustomUuidServiceProvider extends ServiceProvider
 {
+    /**
+     * A list of available commands provided by this package
+     * @var array $commands
+     */
+    protected array $commands = [
+        PublishStubsCommand::class
+    ];
+
     /**
      * Register services.
      *
@@ -16,8 +22,6 @@ class CustomUuidServiceProvider extends ServiceProvider
      */
     public function register()
     {
-        $loader = AliasLoader::getInstance();
-        $loader->alias(Model::class, UuidModel::class);
 //        $this->mergeConfigFrom(
 //            __DIR__ . "/../config/config.php",
 //            'webhook_receiver'
@@ -35,11 +39,12 @@ class CustomUuidServiceProvider extends ServiceProvider
 //        $this->registerEndpointRoute();
 //        $this->registerCrudRoutes();
 //
-//        if($this->app->runningInConsole()) {
+        if($this->app->runningInConsole()) {
+            $this->commands($this->commands);
 //            $this->publishes([
 //                __DIR__ . "/../config/config.php" => config_path('webhook_receiver.php')
 //            ], 'config');
-//        }
+        }
     }
 
 //    protected function registerEndpointRoute()
