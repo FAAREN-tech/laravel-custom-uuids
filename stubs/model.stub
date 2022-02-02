@@ -4,8 +4,9 @@ namespace {{ namespace }};
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use FaarenTech\LaravelCustomUuids\Models\UuidModel as Model;
+use FaarenTech\LaravelCustomUuids\Interfaces\HasCustomUuidInterface;
 
-class {{ class }} extends Model
+class {{ class }} extends Model implements HasCustomUuidInterface
 {
     use HasFactory;
 }

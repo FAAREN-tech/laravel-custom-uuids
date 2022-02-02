@@ -4,7 +4,7 @@ This package offers uuids like they are used by Stripe, prefixed by the model.
 
 ## Open Tasks
 
-- Do something
+- Add command to add this field to existing models
 
 ## Installation
 
