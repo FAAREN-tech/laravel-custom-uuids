@@ -4,7 +4,7 @@ This package offers uuids like they are used by Stripe, prefixed by the model.
 
 ## Open Tasks
 
-- Add command to add this field to existing models
+- [ ] Add command to add this field to existing models
 
 ## Installation
 
@@ -20,14 +20,19 @@ php artisan custom-uuids:publish-stubs
 
 ## Usage
 
-As this package uses its own stubs, you can simply keep running the `make` commands as you are used to. This package overrides the stubs for `make:model` and `make:migration`.
+### Normal models
 
-The changes made to the stubs are:
+Simply keep using the following commands to create models and migrations:
 
-- added another base model to extend `FaarenTech\LaravelCustomUuids\Models\UuidModel` instead of `Illuminate\Database\Eloquent\Model`. `Illuminate\Database\Eloquent\Model` is still the parent class of `FaarenTech\LaravelCustomUuids\Models\UuidModel`
-- added an additional uuid column to the create migration 
+- `php artisan make:model <MyModel>` to create a new model
+- `php artisan make:model <MyModel> -m` to create a new model and a migration 
+- `php artisan make:migration <CreateMyModelTable>` to create a new migration class
 
-## User Model and Authenticatable Models
+Thanks to the custom stubs, those generated classes will have included the relevant interfaces and/or methods.
+
+**Important**: You have to implement `public function getUuidPrefix(): string` from `FaarenTech\LaravelCustomUuids\Interfaces\HasCustomUuidInterface` by your own.
+
+### User Model and Authenticatable Models
 
 Those models that are a child of `Illuminate\Foundation\Auth\User`, e.g. the `App\User` model, you have to do some additional work.
 
@@ -81,3 +86,7 @@ class User extends UuidModel implements
     }
 }
 ```
+
+## Customize stubs
+
+Of course, you are free to customize the given stubs. They are stored in `*/stubs`.
