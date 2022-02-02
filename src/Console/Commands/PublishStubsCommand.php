@@ -42,6 +42,11 @@ class PublishStubsCommand extends Command
         return 0;
     }
 
+    /**
+     * Publishes stubs for this package
+     *
+     * @return void
+     */
     protected function publishStubs(): void
     {
         $this->info("Publishing stubs for model und migration creation");
