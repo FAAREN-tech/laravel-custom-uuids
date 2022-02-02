@@ -2,6 +2,9 @@
 
 namespace FaarenTech\LaravelCustomUuids;
 
+use FaarenTech\LaravelCustomUuids\Models\UuidModel;
+use Illuminate\Database\Eloquent\Model;
+use Illuminate\Foundation\AliasLoader;
 use Illuminate\Support\Facades\Route;
 use Illuminate\Support\ServiceProvider;
 
@@ -14,6 +17,8 @@ class CustomUuidServiceProvider extends ServiceProvider
      */
     public function register()
     {
+        $loader = AliasLoader::getInstance();
+        $loader->alias(Model::class, UuidModel::class);
 //        $this->mergeConfigFrom(
 //            __DIR__ . "/../config/config.php",
 //            'webhook_receiver'
