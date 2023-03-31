@@ -60,7 +60,6 @@ class UuidHelper
      */
     protected static function hasNoEntryInDatabase(string $table, string $uuid, string $column = "uuid"): bool
     {
-        $count = DB::table($table)->where('uuid', $uuid)->count();
-        return $count === 0;
+        return (DB::table($table)->where('uuid', $uuid)->count() === 0);
     }
 }
